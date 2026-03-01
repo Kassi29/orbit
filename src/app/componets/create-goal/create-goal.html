@@ -1,0 +1,102 @@
+<h2>New Goal</h2>
+
+<form [formGroup]="goalForm" (ngSubmit)="onSave()" class="create-goal-container">
+
+  <div class="form-header">
+    <label class="field-label">Goal Title</label>
+
+    <div class="form-header-input">
+      <div class="goal-title-container">
+        <input formControlName="name" placeholder="Enter goal name..." class="main-title-input">
+      </div>
+
+      <div class="color-picker-wrapper">
+        <div class="color-circle" [style.background-color]="goalForm.get('color')?.value">
+          <span class="material-symbols-outlined">palette</span>
+          <input type="color" formControlName="color" class="hidden-color-input">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="date-range-container">
+    <div class="date-field">
+      <label class="field-label">Start Date</label>
+      <div class="input-wrapper">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <input type="date" formControlName="startDay">
+      </div>
+    </div>
+
+    <div class="date-field">
+      <label class="field-label">End Date</label>
+      <div class="input-wrapper">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <input type="date" formControlName="endDay">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2>Add Tasks & Frequency</h2>
+    <button type="button" (click)="addTask()" class="add-task-btn">+ Add Task</button>
+  </div>
+
+  <div formArrayName="tasks" class="tasks-list">
+    @for (task of tasks.controls; track $index; let taskIndex = $index) {
+      <div [formGroupName]="taskIndex" class="task-input-card">
+        <div class="task-field">
+          <label class="field-label">Task Name</label>
+          <input formControlName="name" placeholder="e.g. Meditate" class="task-name-input">
+        </div>
+
+        <div class="date-range-container">
+          <div class="date-field">
+            <label class="field-label">Task Start</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_today</span>
+              <input type="date"
+                     formControlName="startDay"
+                     [min]="goalForm.get('startDay')?.value"
+                     [max]="goalForm.get('endDay')?.value">
+            </div>
+          </div>
+
+          <div class="date-field">
+            <label class="field-label">Task End</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <input type="date"
+                     formControlName="endDay"
+                     [min]="task.get('startDay')?.value"
+                     [max]="goalForm.get('endDay')?.value">
+            </div>
+          </div>
+        </div>
+
+        <div class="frequency-field">
+          <label class="field-label">Frequency</label>
+          <div class="days-row">
+            @for (day of DAYS_IN_THE_WEEK; track day.value) {
+              <button type="button"
+                      class="day-btn"
+                      [class.active]="task.get('frequency')?.value.includes(day.value)"
+                      [style.background-color]="task.get('frequency')?.value.includes(day.value) ? goalForm.get('color')?.value : ''"
+                      (click)="onToggleDay(taskIndex, day.value)">
+                {{ day.abbreviation }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="footer-actions">
+    <button type="submit" [disabled]="goalForm.invalid" class="save-routine-btn">
+      <span class="material-symbols-outlined">check_circle</span>
+      Save Goal Routine
+    </button>
+  </div>
+</form>

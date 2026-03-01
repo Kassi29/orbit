@@ -1,0 +1,50 @@
+<div class="task-card"
+     [ngClass]="{'is-completed': task.isCompleted,
+                 'menu-open': isOpenDropDown}">
+  <div class="checkbox-container">
+    <label class="custom-check">
+      <input
+        type="checkbox"
+        [checked]="task.isCompleted"
+        (change)="onCheckTask()">
+
+      <span class="checkmark">
+        <span class="material-symbols-outlined">check</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="task-info">
+    <h3 class="task-title">{{ task.name }}</h3>
+    <div class="goal-badge"
+         [style.background-color]="task.goalColor + '30'"
+         [style.color]="task.goalColor">
+      {{ task.goalName }}
+    </div>
+  </div>
+
+  <div class="task-actions">
+    <button class="action-btn"
+            (click)="toggleDropDown()">
+      <span class="material-symbols-outlined">
+        {{ 'more_vert' }}
+      </span>
+    </button>
+
+    @if (isOpenDropDown) {
+      <div class="dropdown-menu">
+        <button type="button" class="action-btn" (click)="editTask($event, task.id, task.goalId)">
+          <span class="material-symbols-outlined">edit</span>
+          Edit Task
+        </button>
+
+        <div class="divider"></div>
+
+        <button type="button" class="action-btn delete" (click)="deleteTask($event,task.id, task.goalId)">
+          <span class="material-symbols-outlined">delete</span>
+          Delete
+        </button>
+      </div>
+    }
+  </div>
+</div>

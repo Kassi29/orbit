@@ -1,0 +1,280 @@
+// Variables
+$bg-color: #f8fafc;
+$white: #ffffff;
+$text-main: #0f172a;
+$text-muted: #64748b;
+$primary-purple: #9333ea;
+
+* {
+  box-sizing: border-box;
+}
+
+.create-goal-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: $bg-color;
+  min-height: 100vh;
+  padding: 1rem 1rem 120px;
+  overflow-x: hidden;
+
+  .field-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-header {
+    margin-bottom: 1.5rem;
+
+    .form-header-input {
+      align-items: center;
+      display: flex;
+      gap: 4%;
+    }
+
+    .goal-title-container {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .main-title-input {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      background: $white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      height: 50px;
+      outline: none;
+    }
+
+    .color-picker-wrapper .color-circle {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      border-radius: 20%;
+      border-radius: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      .hidden-color-input {
+        cursor: pointer;
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+      }
+    }
+  }
+
+  .date-range-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 380px) {
+      flex-direction: column;
+    }
+
+    .date-field {
+      flex: 1;
+      min-width: 0;
+
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+        background: $white;
+        padding: 0.7rem;
+        border-radius: 14px;
+        gap: 0.4rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+        span {
+          font-size: 1.1rem;
+          color: $text-muted;
+        }
+
+        input {
+          border: none;
+          outline: none;
+          width: 100%;
+          font-size: 0.85rem;
+          color: $text-main;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0 0.2rem;
+
+    h2 {
+      font-size: 1rem;
+      color: $text-main;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .add-task-btn {
+      background: none;
+      border: none;
+      color: $primary-purple;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+  }
+
+  .task-input-card {
+    background: $white;
+    padding: 1.25rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.05);
+
+    .task-name-input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #f1f5f9;
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-bottom-color: $primary-purple;
+      }
+    }
+
+    .days-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+
+      .day-btn {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: none;
+        background: #f1f5f9;
+        color: $text-muted;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.active {
+          color: white;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  .footer-actions {
+    position: fixed;
+    bottom: 45px;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, $bg-color 70%, transparent);
+    z-index: 10;
+
+    .save-routine-btn {
+      height: 55px;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      padding: 1.1rem;
+      border: none;
+      border-radius: 18px;
+      background: $primary-purple;
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4);
+
+      &:disabled {
+        opacity: 0.5;
+        filter: grayscale(1);
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .create-goal-container {
+    max-width: 650px;
+    margin: 3rem auto;
+    background-color: $white;
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+    min-height: auto;
+    padding: 2.5rem;
+  }
+
+  .date-range-container {
+    gap: 1.5rem;
+
+    .date-field .input-wrapper {
+      padding: 1rem;
+
+      input {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .task-input-card {
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  }
+
+  .footer-actions {
+    position: static;
+    padding: 2rem 0 0 0;
+    background: transparent;
+
+    .save-routine-btn {
+      max-width: 100%;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: darken($primary-purple, 5%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: block;
+    background-color: #f1f5f9;
+    min-height: 100vh;
+  }
+}
+

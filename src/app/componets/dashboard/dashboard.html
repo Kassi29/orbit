@@ -1,0 +1,21 @@
+
+
+<header class="main-header">
+  <div class="header-content">
+    <h1>Hello you!, <br><span>{{ todayDate }}</span></h1>
+  </div>
+
+</header>
+
+@for (task of todayTasks$ | async; track task.id) {
+  <app-task-card
+    [task]="task"
+    (deleteTaskEmitter)="onDeleteTask($event)"
+    (editTaskEmitter)="onEditTask($event)"
+    (toggleStatusEmitter)="onCheckTask($event)">
+  </app-task-card>
+} @empty {
+  <div class="empty-state">
+    <p>🎉 All done for today! Time to relax.</p>
+  </div>
+}
