@@ -1,0 +1,35 @@
+<div class="goal-detail-page" *ngIf="goal$ | async as goal">
+  <header class="page-header">
+    <button class="back-btn" routerLink="/select-goal">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+
+    <div class="header-actions">
+      <button class="icon-btn edit-goal"><span class="material-symbols-outlined">edit</span></button>
+      <button class="icon-btn delete-goal" (click)='onDeleteGoal()'><span class="material-symbols-outlined">delete</span></button>
+    </div>
+  </header>
+
+  <div class="goal-hero" [style.background-color]="goal.color + '15'" [style.border-left-color]="goal.color">
+    <h1>{{ goal.name }}</h1>
+    <span class="badge" [style.background-color]="goal.color">{{ (tasks$ | async)?.length }} tasks</span>
+  </div>
+
+  <section class="tasks-section">
+    <div class="section-header">
+      <h2>Tasks List</h2>
+      <button [routerLink]="['/add-task', goal.id]" class="add-btn">+ Add Task</button>
+    </div>
+
+    @for (task of (tasks$ | async); track task.id) {
+      <app-task-card
+        [task]="task"
+        (deleteTaskEmitter)="onDeleteTask($event)"
+        (editTaskEmitter)="onEditTask($event)"
+        (toggleStatusEmitter)="onCheckTask($event)">
+      </app-task-card>
+    } @empty {
+      <div class="empty-state">No tasks created yet for this goal.</div>
+    }
+  </section>
+</div>

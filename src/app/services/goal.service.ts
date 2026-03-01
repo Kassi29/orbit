@@ -107,6 +107,40 @@ export class GoalService {
     );
   }
 
+  public getGoalById(goalId: string): Observable<Goal | undefined> {
+    return this.goals$.pipe(
+      map((allGoals: Goal[]) => allGoals.find((goal: Goal) => goal.id === goalId)));
+  }
+
+  public getTasksByGoalId(goalId: string): Observable<TaskWithGoal[]> {
+    return combineLatest([this.goals$, this._entries.asObservable()]).pipe(
+      map(([allGoals, allEntries]: [Goal[], DailyEntryInterface[]]) => {
+        const goal: Goal | undefined = allGoals.find((goal: Goal) => goal.id === goalId);
+
+        if (!goal) return [];
+
+        return goal.tasks.map((task: Task): TaskWithGoal => {
+          return {
+            ...task,
+            isCompleted: this._isTaskDone(allEntries, task.id),
+            goalColor: goal.color,
+            goalName: goal.name
+          };
+        });
+      })
+    );
+  }
+
+  public updateGoal(goalId: string, updatedData: Goal): void {
+    const updatedGoals: Goal[] = this._goals.value.map((goal: Goal) => {
+      if (goal.id !== goalId) return goal;
+
+      return {...goal, ...updatedData}
+    });
+
+    this._persistGoals(updatedGoals);
+  }
+
   public getTaskData(data: IdentifyTaskData): Observable<Task | undefined> {
     return this.goals$.pipe(
       map((allGoals: Goal[]) => {

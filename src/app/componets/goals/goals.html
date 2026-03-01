@@ -1,0 +1,27 @@
+<div class="select-goal-page">
+  <header class="page-header">
+    <button class="back-btn" routerLink="/">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1>Select a Goal</h1>
+  </header>
+
+  <div class="goals-grid">
+    @for (goal of (goals$ | async); track goal.id) {
+      <div class="goal-selection-card"
+           [style.border-left-color]="goal.color"
+           [routerLink]="['/goal-detail', goal.id]">
+        <div class="goal-info">
+          <h3>{{ goal.name }}</h3>
+          <p class="task-count">{{ goal.tasks?.length || 0 }} tasks</p>
+        </div>
+        <span class="material-symbols-outlined">chevron_right</span>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>No goals found. Create one first!</p>
+        <button routerLink="/create" class="create-first-btn">Create Goal</button>
+      </div>
+    }
+  </div>
+</div>
