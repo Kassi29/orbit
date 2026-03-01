@@ -1,4 +1,5 @@
-// Variables
+@use "sass:color";
+
 $bg-color: #f8fafc;
 $white: #ffffff;
 $text-main: #0f172a;
@@ -263,7 +264,7 @@ $primary-purple: #9333ea;
       transition: transform 0.2s ease, background-color 0.2s;
 
       &:hover:not(:disabled) {
-        background-color: darken($primary-purple, 5%);
+        background-color: color.adjust($primary-purple, $lightness: -5%);
         transform: translateY(-2px);
       }
     }

@@ -132,6 +132,20 @@ export class GoalService {
     this._persistEntries(newEntries);
   }
 
+  public updateTask(goalId: string, taskId: string, updatedData: Task): void {
+    const updatedGoals = this._goals.value.map((goal: Goal) => {
+      if (goal.id !== goalId) return goal;
+
+      const updatedTasks: Task[] = goal.tasks.map((task: Task) => {
+        return task.id === taskId ? {...task, ...updatedData} : task;
+      });
+
+      return {...goal, tasks: updatedTasks};
+    });
+
+    this._persistGoals(updatedGoals);
+  }
+
   private _addNewEntry(currentEntries: DailyEntryInterface[], taskId: string): DailyEntryInterface[] {
     const newEntry: DailyEntryInterface = {taskId, date: this._todayDate, id: crypto.randomUUID()};
 

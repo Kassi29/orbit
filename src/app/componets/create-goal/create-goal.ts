@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {GoalService} from '../../services/goal.service';
 import {TaskInitialData} from '../../models/viewModel/task-initial.data';
 import {DAYS_IN_THE_WEEK} from '../../models/constants/days.constants';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-goal',
@@ -16,6 +17,7 @@ export class CreateGoal {
 
   private _formBuilder = inject(FormBuilder);
   private _goalService = inject(GoalService);
+  private _router = inject(Router);
 
   public goalForm: FormGroup = this._formBuilder.group({
     color: ['#9333ea'],
@@ -76,7 +78,6 @@ export class CreateGoal {
       name: name
     });
 
-
     tasks.forEach((task: TaskInitialData) => {
       this._goalService.addTask({
         ...task,
@@ -87,6 +88,7 @@ export class CreateGoal {
     });
 
     this._resetForm();
+    this._router.navigate(['/'])
   }
 
   private _deleteDay(currentTaskFrequency: number[], dayValue: number): number[] {

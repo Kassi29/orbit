@@ -1,10 +1,7 @@
-
-
 <header class="main-header">
   <div class="header-content">
-    <h1>Hello you!, <br><span>{{ todayDate }}</span></h1>
+    <h1>Welcome Back!!, <br><span>{{ todayDate }}</span></h1>
   </div>
-
 </header>
 
 @for (task of todayTasks$ | async; track task.id) {

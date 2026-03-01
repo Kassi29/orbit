@@ -6,6 +6,6 @@ import {EditTask} from './componets/edit-task/edit-task';
 export const routes: Routes = [
   {path: '', component: Dashboard},
   {path: 'create', component: CreateGoal},
-  {path: 'edit-task/:goalId/:takId', component: EditTask},
+  {path: 'edit-task/:goalId/:taskId', component: EditTask},
   {path: '**', redirectTo: ''}
 ];

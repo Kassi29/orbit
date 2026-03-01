@@ -2,8 +2,9 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import {GoalService} from '../../services/goal.service';
 import {Task} from '../../models/task.interface';
 import {take} from 'rxjs';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {DAYS_IN_THE_WEEK} from '../../models/constants/days.constants';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-task',
@@ -20,12 +21,25 @@ export class EditTask implements OnInit {
   public taskForm!: FormGroup;
 
   private _formBuilder = inject(FormBuilder);
+  private _goalService = inject(GoalService);
+  private _router = inject(Router);
 
-  constructor(private _goalService: GoalService) {
-  }
+  protected readonly DAYS_IN_THE_WEEK = DAYS_IN_THE_WEEK;
 
   public ngOnInit(): void {
     this._getTaskInformation();
+  }
+
+  public onUpdateTask(): void {
+    if (this.taskForm.invalid) return;
+
+    this._goalService.updateTask(this.goalId, this.taskId, this.taskForm.value);
+
+    this.goBackToDashboard();
+  }
+
+  public goBackToDashboard(): void {
+    this._router.navigate(['/']);
   }
 
   public onToggleDay(dayValue: number): void {
@@ -48,25 +62,19 @@ export class EditTask implements OnInit {
     ));
   }
 
-
   private _getTaskInformation(): void {
     this._goalService.getTaskData({goalId: this.goalId, taskId: this.taskId}).pipe(
       take(1)).subscribe((task: Task | undefined) => {
-      if (task) {
-        this.task = task;
+      if (!task) return;
 
-        this.taskForm = this._formBuilder.group({
-          name: [task.name, Validators.required],
-          startDay: [task.startDay, Validators.required],
-          endDay: [task.endDay, Validators.required],
-          frequency: [task.frequency || []]
-        });
+      this.task = task;
 
-      } else {
-        console.error('We cannot find your task :C')
-      }
+      this.taskForm = this._formBuilder.group({
+        name: [task.name, Validators.required],
+        startDay: [task.startDay, Validators.required],
+        endDay: [task.endDay, Validators.required],
+        frequency: [task.frequency || []]
+      })
     });
   }
-
-  protected readonly DAYS_IN_THE_WEEK = DAYS_IN_THE_WEEK;
 }

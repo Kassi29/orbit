@@ -1,7 +1,6 @@
 <div class="edit-task-page">
   <header class="page-header">
-    <button class="back-btn">
-<!--      <button class="back-btn" (click)="onCancel()">-->
+    <button class="back-btn" (click)="goBackToDashboard()">
       <span class="material-symbols-outlined">arrow_back</span>
     </button>
     <h1>Edit Task</h1>
@@ -9,9 +8,7 @@
 
   <main class="content-area">
     @if (taskForm) {
-<!--      <form [formGroup]="taskForm" (ngSubmit)="onUpdate()">-->
-        <form [formGroup]="taskForm">
-
+      <form [formGroup]="taskForm" (ngSubmit)="onUpdateTask()">
         <div class="task-input-card">
           <div class="task-field">
             <label class="field-label">Task Name</label>
