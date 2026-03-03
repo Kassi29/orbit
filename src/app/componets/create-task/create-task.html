@@ -1,0 +1,58 @@
+<div class="create-task-page">
+  <header class="page-header">
+    <button class="back-btn" (click)="goBackToDetail()">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1>Create Task</h1>
+  </header>
+
+  <main class="content-area">
+    <form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+      <div class="task-input-card">
+        <div class="task-field">
+          <label class="field-label">Task Name</label>
+          <input formControlName="name" placeholder="e.g. Drink water" class="task-name-input" autofocus>
+        </div>
+
+        <div class="date-range-container">
+          <div class="date-field">
+            <label class="field-label">Task Start</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_today</span>
+              <input type="date" formControlName="startDay">
+            </div>
+          </div>
+
+          <div class="date-field">
+            <label class="field-label">Task End</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <input type="date" formControlName="endDay">
+            </div>
+          </div>
+        </div>
+
+        <div class="frequency-field">
+          <label class="field-label">Frequency</label>
+          <div class="days-row">
+            @for (day of DAYS_IN_THE_WEEK; track day.value) {
+              <button type="button"
+                      class="day-btn"
+                      [class.active]="taskForm.get('frequency')?.value.includes(day.value)"
+                      (click)="onToggleDay(day.value)">
+                {{ day.abbreviation }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button type="submit" [disabled]="taskForm.invalid" class="save-routine-btn">
+          <span class="material-symbols-outlined">check_circle</span>
+          Save Task
+        </button>
+      </div>
+    </form>
+  </main>
+</div>

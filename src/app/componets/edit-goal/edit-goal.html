@@ -1,0 +1,54 @@
+<div class="edit-goal-page">
+  <header class="page-header">
+    <button class="back-btn" (click)="goBackToGoalDetail()">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <h1>Edit Goal</h1>
+  </header>
+
+  <main class="content-area">
+    <form [formGroup]="goalForm" (ngSubmit)="onSave()" class="edit-goal-form">
+
+      <div class="form-header-card">
+        <label class="field-label">Goal Title & Color</label>
+        <div class="header-inputs">
+          <input formControlName="name" placeholder="Enter goal name..." class="main-title-input">
+
+          <div class="color-picker-wrapper">
+            <div class="color-circle" [style.background-color]="goalForm.get('color')?.value">
+              <span class="material-symbols-outlined">palette</span>
+              <input type="color" formControlName="color" class="hidden-color-input">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="date-card">
+        <div class="date-range-container">
+          <div class="date-field">
+            <label class="field-label">Start Date</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_today</span>
+              <input type="date" formControlName="startDay">
+            </div>
+          </div>
+
+          <div class="date-field">
+            <label class="field-label">End Date</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined">calendar_month</span>
+              <input type="date" formControlName="endDay">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-actions">
+        <button type="submit" [disabled]="goalForm.invalid" class="save-btn">
+          <span class="material-symbols-outlined">check_circle</span>
+          Update Goal
+        </button>
+      </div>
+    </form>
+  </main>
+</div>

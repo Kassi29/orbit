@@ -4,7 +4,6 @@ import {TaskCard} from '../task-card/task-card';
 import {Router, RouterLink} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Goal} from '../../models/goal.interface';
-import {Task} from '../../models/task.interface';
 import {GoalService} from '../../services/goal.service';
 import {TaskWithGoal} from '../../models/viewModel/TaskWithGoal.interface';
 
@@ -44,5 +43,7 @@ export class GoalDetail implements OnInit {
 
   public onDeleteGoal(): void {
     this._goalService.deleteGoal(this.goalId);
+
+    this._router.navigate(['/all-goals']);
   }
 }
